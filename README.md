@@ -38,14 +38,11 @@ npm run dev
 # Accede a http://localhost:5174
 La aplicación se sirve en `http://localhost:5174` (configurado en `vite.config.ts`).
 ```
-#### Resumen
+### Explicaciones relevantes
 
-Para ambos clientes se definieron 3 componentes principales encargados de mostrar e interactuar con el chat.  
-El usuario debe ingresar un nombre para ser identificado antes de poder enviar mensajes.
+#### 1. Arquitectura
 
-#### Arquitectura
-
-**Flujo de Comunicación**
+**Flujo de comunicación**
 
 Cliente (React/Vue)  
 &nbsp;&nbsp;&nbsp;&nbsp;↓  
@@ -59,6 +56,13 @@ Actualiza estado y renderiza
 
 El servidor captura cada mensaje y lo emite nuevamente a todos los clientes activos.  
 Cuando cada cliente recibe el evento, actualiza su estado interno y vuelve a pintar la interfaz para reflejar el nuevo mensaje en el chat en tiempo real.
+
+#### 2. Decisiones técnicas
+
+- **Stack**: React + TypeScript (cliente 1) y Vue 3 + TypeScript + Pinia (cliente 2), con Vite como bundler.
+- **Comunicación en tiempo real**: Socket.IO (cliente y servidor) sobre HTTP/WebSocket en el puerto 3001.
+- **Estado de la UI**: se centraliza en un contexto/hook (`useChat`) en React y en un store de Pinia en Vue.
+- **Persistencia básica**: nombre de usuario y mensajes se guardan en `localStorage` para mantenerlos entre recargas.
 
 ### Funcionalidades implementadas
 
